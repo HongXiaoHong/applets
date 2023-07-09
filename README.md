@@ -1,105 +1,56 @@
 # applets
+
 各种小程序
 
 ## 这里有个分支
-### random-quote-machine
-原本是打算做一个返回随机名言的接口
-随机名言还要使用爬虫进down一些名言警句下来
-还有一个想法是
-从 BrainyQuote 这个网站爬虫抓取每天的名言警句
-[BrainyQuote-quote_of_the_day](https://www.brainyquote.com/quote_of_the_day)
 
-但是突然间想做一个随机歌词的接口也不错
-毕竟有一部分lrc文件了
+### music_magnetic_field_analyzer
 
-从文件夹 E:/BaiduSyncdisk/music/lyrics 中
-读取lrc 文件后
-提取文件中的连续几句作为返回
+做一个 音乐磁场 网页的解析
+功能:
 
-访问 [获取歌词](http://localhost:8888/random/lrcs)
-就可以得到
-```json5
-[
-    {
-        "author": "林宥嘉",
-        "lrcs": [
-            "",
-            "",
-            ""
-        ],
-        "song": "浪费"
-    },
-    {
-        "author": "郭静",
-        "lrcs": [
-            "我的爱会攀上窗台盛放",
-            "打开窗你会看到悲伤融化",
-            "你会闻到幸福晴朗的芬芳"
-        ],
-        "song": "心墙"
-    },
-    {
-        "author": "胡彦斌",
-        "lrcs": [
-            "曾爱的贪得无厌",
-            "也要为过去留一些尊严",
-            "散了我们就干脆一点"
-        ],
-        "song": "你要的全拿走"
-    },
-    {
-        "author": "周慧敏",
-        "lrcs": [
-            "伴我星夜里幻想",
-            "方知不用太紧张",
-            "没法隐藏这份爱"
-        ],
-        "song": "最爱"
-    },
-    {
-        "author": "林宥嘉",
-        "lrcs": [
-            "我跟谁变得亲密 谁逐渐离我远去",
-            "华丽演出共襄盛举 唯有你的背影",
-            "友情客串却留下刻骨铭心的回忆"
-        ],
-        "song": "神秘嘉宾"
-    },
-    {
-        "author": "洪卓立",
-        "lrcs": [
-            "我未有想过绝望看她走",
-            "「分手」两字情绝不留",
-            "为爱伤心的声线 变了怀旧"
-        ],
-        "song": "弥敦道"
-    },
-    {
-        "author": "林志炫",
-        "lrcs": [
-            "Right now 闭上眼用心去感受",
-            "有一个声音 它说爱情 没离开过",
-            ""
-        ],
-        "song": "没离开过"
-    },
-    {
-        "author": "Tank",
-        "lrcs": [
-            "等待良人归来那一刻 眼泪为你唱歌",
-            "在我离你远去那一天 蓝色的雨下在我眼前",
-            "骄傲的泪 不敢弃守我眼睛"
-        ],
-        "song": "三国恋"
-    },
-    {
-        "author": "林峰",
-        "lrcs": [
-            "前事最怕有人提起 就算怎么伸尽手臂",
-            "我们亦有一些距离",
-            "我情愿我狠心憎你 我还在记忆中找你"
-        ],
-        "song": "爱在记忆中找你"
-    }
-]
+- 下载音乐到本地
+- 返回下载的音乐信息给页面
+- 选择不同目录进行下载, 见music_magnetic_field_analyzer/constants.py
+
+复制windows路径的时候记得更换反斜杠 \ 为 斜杠 /
+
+```python
+SAVE_MUSIC_PATHS = {
+    "temp": "E:/BaiduSyncdisk/music/download/temp",
+    "like": "E:/BaiduSyncdisk/music/like",
+    "favorite": "E:/BaiduSyncdisk/music/favorite",
+    "life": "E:/BaiduSyncdisk/music/download/life",
+    "exercise": "E:/BaiduSyncdisk/music/exercise",
+
+}
 ```
+
+前端发来下载链接
+
+```http
+POST http://localhost:8888/music/magnetic/field/download
+Content-Type: application/json
+
+{
+    "url": "https://www.hifini.com/thread-4284.htm",
+    "directory": "favorite"
+}
+```
+
+成功响应
+
+```json5
+{
+    "artist_name": "周柏豪",
+    "music_url": "get_music.php?key=sHFKPlODpcWKT+8xzWMHKJ2nR8NkDo1z/xmSSf/+vgcnBATGy2vBJ9DX7E71soNa2+Dg7OwNQA",
+    "result": "success",
+    "song_name": "我的宣言"
+}
+```
+
+### 前端
+
+![music_magnetic_field_analyzer](https://raw.githubusercontent.com/HongXiaoHong/images/main/picture/music_magnetic_field_analyzer.gif)
+
+![music_magnetic_field_analyzer_v1](https://raw.githubusercontent.com/HongXiaoHong/images/main/picture/music_magnetic_field_analyzer_v1.gif)
