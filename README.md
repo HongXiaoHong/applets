@@ -4,38 +4,19 @@
 
 ## 这里有个分支
 
-### music_magnetic_field_analyzer
+### early_bed_healthy_player | 早睡身体好播放器
 
-做一个 音乐磁场 网页的解析
+做一个 播放器
 功能:
 
-- 下载音乐到本地
-- 返回下载的音乐信息给页面
-- 选择不同目录进行下载, 见music_magnetic_field_analyzer/constants.py
+- 收集本地目录的文件, 做成一个歌单
+- 返回 对应的mp3文件
 
-复制windows路径的时候记得更换反斜杠 \ 为 斜杠 /
-
-```python
-SAVE_MUSIC_PATHS = {
-    "temp": "E:/BaiduSyncdisk/music/download/temp",
-    "like": "E:/BaiduSyncdisk/music/like",
-    "favorite": "E:/BaiduSyncdisk/music/favorite",
-    "life": "E:/BaiduSyncdisk/music/download/life",
-    "exercise": "E:/BaiduSyncdisk/music/exercise",
-
-}
-```
 
 前端发来下载链接
 
 ```http
-POST http://localhost:8888/music/magnetic/field/download
-Content-Type: application/json
-
-{
-    "url": "https://www.hifini.com/thread-4284.htm",
-    "directory": "favorite"
-}
+GET http://localhost:8891/playlist
 ```
 
 成功响应
