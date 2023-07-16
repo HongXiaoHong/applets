@@ -35,7 +35,8 @@ def random_lrcs():
 @app.route('/audio/<filename>', methods=['GET'])
 def get_audio(filename):
     suffix = get_suffix()
-    favorite_path = SAVE_MUSIC_PATHS["favorite"]
+    currentPlaylistChoose = request.args.get("currentPlaylistChoose")
+    favorite_path = SAVE_MUSIC_PATHS[currentPlaylistChoose]
     return send_file(favorite_path + '/' + filename + "." + suffix,
                      mimetype=MIME_TYPE[suffix])
 
@@ -45,6 +46,15 @@ def get_suffix():
     if suffix not in MIME_TYPE:
         raise Exception('音乐文件只能是 {} 这两种类型, 您现在输入的是值为: {}'.format(LIMIT_SUFFIX, suffix))
     return suffix
+
+
+@app.route('/lyrics/<filename>', methods=['GET'])
+def get_lyrics(filename):
+    with open("E:/BaiduSyncdisk/music/lyrics/{}.lrc".format(filename), "r", encoding='utf-8') as lrc:
+        lrc_content = lrc.read()
+    return jsonify({
+        "lrc": lrc_content
+    })
 
 
 if __name__ == "__main__":
